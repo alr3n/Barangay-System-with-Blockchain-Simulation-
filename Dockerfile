@@ -2,6 +2,9 @@ FROM php:8.2-apache
 
 WORKDIR /var/www/html
 
+# =========================
+# SYSTEM DEPENDENCIES
+# =========================
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -11,29 +14,58 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 
+# =========================
+# COMPOSER
+# =========================
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# =========================
+# COPY PROJECT FILES
+# =========================
 COPY . /var/www/html
 
-# Install dependencies FIRST
+# =========================
+# FIX 1: ENV SAFETY
+# =========================
+RUN cp .env.example .env || true
+
+# =========================
+# INSTALL DEPENDENCIES
+# =========================
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# 🔥 CRITICAL FIX: Laravel required folders + permissions
+# =========================
+# FIX 2: LARAVEL KEY
+# =========================
+RUN php artisan key:generate || true
+
+# =========================
+# FIX 3: STORAGE + CACHE PATH (MAIN FIX FOR YOUR ERROR)
+# =========================
 RUN mkdir -p storage/framework/{sessions,views,cache} \
     && mkdir -p bootstrap/cache \
-    && chmod -R 777 storage bootstrap/cache \
-    && chown -R www-data:www-data /var/www/html
+    && chmod -R 777 storage bootstrap/cache
 
-# 🔥 IMPORTANT: create storage symlink (VERY COMMON MISSING PIECE)
+# =========================
+# FIX 4: CLEAR SAFELY (NO CRASH ON BUILD)
+# =========================
+RUN php artisan optimize:clear || true
+
+# =========================
+# STORAGE LINK (SAFE)
+# =========================
 RUN php artisan storage:link || true
 
-# Set Apache document root to public
+# =========================
+# APACHE CONFIG (IMPORTANT)
+# =========================
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
-    && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+    && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf \
+    && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/conf-available/*.conf
 
-# Clear + rebuild Laravel caches safely
-RUN php artisan config:clear || true
-RUN php artisan cache:clear || true
-RUN php artisan view:clear || true
+# =========================
+# FIX 5: FINAL PERMISSION SAFETY
+# =========================
+RUN chown -R www-data:www-data /var/www/html || true
