@@ -1,4 +1,4 @@
-# 🏛️ Barangay San Jose — Integrated Resident Information & Blockchain-Based Clearance Verification System
+# Barangay San Jose — Integrated Resident Information & Blockchain-Based Clearance Verification System
 
 > A complete digital records-management and document-verification platform for Philippine barangays. Built as 3rd-year BSIT project on Laravel 11.
 
@@ -10,7 +10,7 @@
 
 ---
 
-## 📋 Table of Contents
+##  Table of Contents
 
 - [Overview](#-overview)
 - [Key Features](#-key-features)
@@ -28,7 +28,7 @@
 
 ---
 
-## 📖 Overview
+##  Overview
 
 The **Barangay System** is a web application that modernizes the daily operations of a Philippine barangay office. It replaces paper logbooks with a secure, searchable, audit-friendly digital workspace.
 
@@ -38,7 +38,7 @@ A standout feature is the **blockchain-simulated tamper detection**: every clear
 
 ---
 
-## ⭐ Key Features
+##  Key Features
 
 ### Identity & Records
 - **Resident Management** — full demographic records with soft-delete + archive snapshots
@@ -84,7 +84,7 @@ A standout feature is the **blockchain-simulated tamper detection**: every clear
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 | Layer            | Technology                                    | Version |
 |------------------|-----------------------------------------------|---------|
@@ -109,7 +109,7 @@ A standout feature is the **blockchain-simulated tamper detection**: every clear
 
 ---
 
-## ⚙️ Prerequisites
+##  Prerequisites
 
 Before installing, ensure you have these installed:
 
@@ -136,7 +136,7 @@ php -m | grep -E "pdo_mysql|mbstring|openssl|json|curl"
 
 ---
 
-## 🚀 Installation
+##  Installation
 
 ### Step 1 — Get the Code
 
@@ -150,7 +150,7 @@ unzip Barangay-System-with-Blockchain-Simulation.zip
 cd Barangay-System-with-Blockchain-Simulation
 ```
 
-> ⚠️ **Important:** All subsequent commands must be run from the project root — the folder that contains `artisan`, `composer.json`, and `package.json`. If you see "Could not open input file: artisan", you're in the wrong directory.
+> **Important:** All subsequent commands must be run from the project root — the folder that contains `artisan`, `composer.json`, and `package.json`. If you see "Could not open input file: artisan", you're in the wrong directory.
 
 ### Step 2 — Install PHP Dependencies
 
@@ -236,7 +236,7 @@ Navigate to **http://127.0.0.1:8000** in your browser. You'll be redirected to t
 
 ---
 
-## 🔐 Default Accounts
+##  Default Accounts
 
 After seeding, the following accounts are available:
 
@@ -246,7 +246,7 @@ After seeding, the following accounts are available:
 | Staff | `staff@barangay.gov.ph`     | `staff123` |
 | Staff | `juan@barangay.gov.ph`      | `staff123` |
 
-> ⚠️ **Change these passwords immediately** before any production deployment.
+>  **Change these passwords immediately** before any production deployment.
 
 If login fails after a SQL import (passwords are placeholders), reset them via Tinker:
 
@@ -264,7 +264,7 @@ exit
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 barangay-system/
@@ -380,7 +380,7 @@ barangay-system/
 
 ---
 
-## 📚 Documentation
+##  Documentation
 
 This repository ships with three documentation files:
 
@@ -395,7 +395,7 @@ For module-level details (workflow, APIs, validation, screenshot placeholders), 
 
 ---
 
-## 🚢 Deployment Guide
+## Deployment Guide
 
 ### Production Server Requirements
 
@@ -491,7 +491,7 @@ mysqldump -u root -p barangay_db > /var/backups/barangay_$(date +%Y%m%d).sql
 
 ---
 
-## 🛠 Troubleshooting
+##  Troubleshooting
 
 ### `Could not open input file: artisan`
 You're in the wrong directory. `cd` into the project root (the one with `artisan`, `composer.json`, `package.json`).
@@ -546,7 +546,7 @@ The `APP_KEY` has changed since the document was issued. Hashes include `APP_KEY
 
 ---
 
-## 🧪 Running Tests
+## Running Tests
 
 ```bash
 # Run the test suite
@@ -561,7 +561,7 @@ php artisan test --coverage
 
 ---
 
-## 📜 License
+##  License
 
 This project is open-source software released under the **MIT License**. See `LICENSE` for the full text.
 
