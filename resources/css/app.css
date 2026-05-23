@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --color-primary: #1E3A5F;
+        --color-secondary: #64748B;
+        --color-accent: #3B82F6;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        @apply text-gray-800 antialiased;
+        font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    }
+
+    /* ============================================
+       FIX 1: Dropdown arrow alignment
+       Make every <select> reserve room for a chevron
+       and render a custom SVG arrow so it never gets
+       clipped by the rounded border.
+       ============================================ */
+    select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.6rem center;
+        background-size: 1.25rem 1.25rem;
+        padding-right: 2.25rem !important;
+    }
+    select:focus {
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%231E3A5F' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+    }
+    select::-ms-expand { display: none; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+}
+
+@layer components {
+    .sidebar { background-color: #1E3A5F; min-height: 100vh; }
+    .bg-primary { background-color: #1E3A5F; }
+    .text-primary { color: #1E3A5F; }
+    .border-primary { border-color: #1E3A5F; }
+    .hover\:bg-primary:hover { background-color: #1E3A5F; }
+    .focus\:ring-primary:focus { --tw-ring-color: #1E3A5F; }
+
+    /* Searchable combobox styles */
+    .combobox-wrapper { position: relative; }
+    .combobox-dropdown {
+        position: absolute; top: 100%; left: 0; right: 0; z-index: 50;
+        background: white; border: 1px solid #e5e7eb;
+        border-top: none; border-radius: 0 0 0.5rem 0.5rem;
+        max-height: 240px; overflow-y: auto;
+        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.08);
+    }
+    .combobox-item {
+        padding: 0.5rem 0.75rem; font-size: 0.875rem; cursor: pointer;
+        border-bottom: 1px solid #f3f4f6;
+    }
+    .combobox-item:last-child { border-bottom: none; }
+    .combobox-item:hover, .combobox-item.active { background-color: #eff6ff; color: #1E3A5F; }
+    .combobox-empty { padding: 1rem; text-align: center; color: #9ca3af; font-size: 0.85rem; }
+
+    /* QR scanner */
+    #qr-reader { border-radius: 0.75rem; overflow: hidden; }
+    #qr-reader video { border-radius: 0.5rem; }
+
+    @media print {
+        .sidebar, header, .no-print { display: none !important; }
+        main { margin: 0 !important; padding: 0 !important; }
+    }
+}
+
+@layer utilities {
+    .sidebar { transition: transform 0.25s ease; }
+    @media (max-width: 1023px) {
+        .sidebar.-translate-x-full { transform: translateX(-100%); }
+    }
+}
